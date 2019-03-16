@@ -102,6 +102,20 @@ class Paladins {
       })
     })
   }
+  
+  getMatchIdsByQueue (queue, date, time) {
+    let url = util.genUrl(this.paladinsUrl, 'getmatchidsbyqueue', this.devId, this.authKey, process.env[`PALADINS_${this.platform}_SESSION`]) + '/' + queue +
+      '/' + date + '/' + time
+    return new Promise(function (resolve, reject) {
+      request(url, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          resolve(JSON.parse(body))
+        } else {
+          reject(error)
+        }
+      })
+    })
+  }
 
   getMatchHistory (userName) {
     let url = util.genUrl(this.paladinsUrl, 'getmatchhistory', this.devId, this.authKey, process.env[`PALADINS_${this.platform}_SESSION`]) + '/' + userName
